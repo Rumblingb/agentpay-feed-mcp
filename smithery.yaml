@@ -1,0 +1,22 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      feedUrl:
+        type: string
+        description: "Feed Worker URL (default: https://agentpay-feed.rajiv-9c7.workers.dev)"
+        default: "https://agentpay-feed.rajiv-9c7.workers.dev"
+      publishKey:
+        type: string
+        description: "Bearer token for publishing (optional)"
+        default: ""
+  commandFunction: |
+    (config) => ({
+      command: 'python3',
+      args: ['server.py'],
+      env: {
+        FEED_URL: config.feedUrl || 'https://agentpay-feed.rajiv-9c7.workers.dev',
+        PUBLISH_KEY: config.publishKey || ''
+      }
+    })
